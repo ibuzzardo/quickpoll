@@ -3,6 +3,7 @@ import { pgTable, uuid, text, timestamp } from "drizzle-orm/pg-core";
 export const polls = pgTable("polls", {
   id: uuid("id").defaultRandom().primaryKey(),
   question: text("question").notNull(),
+  expiresAt: timestamp("expires_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
