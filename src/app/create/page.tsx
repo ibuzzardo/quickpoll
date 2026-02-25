@@ -3,10 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+const EXPIRY_OPTIONS = [
+  { value: "never", label: "No expiry" },
+  { value: "1h", label: "1 hour" },
+  { value: "24h", label: "24 hours" },
+  { value: "7d", label: "7 days" },
+];
+
 export default function CreatePollPage() {
   const router = useRouter();
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
+  const [expiresIn, setExpiresIn] = useState("never");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -44,7 +52,7 @@ export default function CreatePollPage() {
       const res = await fetch("/api/polls", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, options: validOptions }),
+        body: JSON.stringify({ question, options: validOptions, expiresIn }),
       });
 
       if (!res.ok) {
@@ -116,6 +124,24 @@ export default function CreatePollPage() {
                 + Add another option
               </button>
             )}
+          </div>
+
+          {/* s3-poll-expiry: expiry duration selector */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Poll expiry
+            </label>
+            <select
+              value={expiresIn}
+              onChange={(e) => setExpiresIn(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+            >
+              {EXPIRY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {error && (

@@ -23,7 +23,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "dev": "next dev",
-    "build": "next build",
+    "build": "drizzle-kit push && next build",
     "start": "next start",
     "lint": "next lint"
   }

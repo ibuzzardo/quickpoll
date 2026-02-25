@@ -22,7 +22,11 @@ export async function GET(
       .groupBy(options.id, options.text);
     const totalVotes = results.reduce((sum, r) => sum + (r.votes || 0), 0);
     return NextResponse.json({
-      id: poll.id, question: poll.question, createdAt: poll.createdAt, totalVotes,
+      id: poll.id,
+      question: poll.question,
+      expiresAt: poll.expiresAt,
+      createdAt: poll.createdAt,
+      totalVotes,
       options: results.map((r) => ({ id: r.id, text: r.text, votes: r.votes || 0 })),
     });
   } catch (error) {
