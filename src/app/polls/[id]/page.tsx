@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface PollOption {
   id: string;
@@ -97,8 +97,8 @@ function formatExpiry(expiresAt: string | null): { label: string; expired: boole
   return { label: "Expiring soon", expired: false };
 }
 
-export default function PollPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function PollPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const [poll, setPoll] = useState<Poll | null>(null);
   const [loading, setLoading] = useState(true);
   const [voting, setVoting] = useState(false);
